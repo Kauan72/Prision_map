@@ -155,34 +155,6 @@ class Tabuleiro:
             texto_label.pack(side=tk.LEFT)
 
 
-        def criar_legenda(self):
-            legenda_frame = tk.Frame(self.root)
-            legenda_frame.pack(side=tk.LEFT, padx=30, pady=10, anchor="nw")  # Aumentei o padding lateral
-
-            legenda_titulo = tk.Label(
-                legenda_frame, text="Legenda", font=("Arial", 14, "bold"))
-            legenda_titulo.pack(side=tk.TOP, anchor="w", pady=(0, 10))  # Adicionei espaço abaixo do título
-
-            legenda_itens = [
-                ("Cinza escuro", "Asfalto", "gray"),
-                ("Verde", "Grama", "green"),
-                ("Marrom", "Terra", "saddle brown"),
-                ("Cinza claro", "Paralelepípedo", "lightgray"),
-                ("Azul", "Edifícios", "blue")
-            ]
-
-            for cor_nome, descricao, cor in legenda_itens:
-                item_frame = tk.Frame(legenda_frame)
-                item_frame.pack(side=tk.TOP, anchor="w", pady=5)  # Adicionei espaço entre os itens
-
-                cor_label = tk.Label(
-                    item_frame, width=2, height=1, background=cor, relief="solid", borderwidth=1)
-                cor_label.pack(side=tk.LEFT, padx=10)  # Aumentei o padding lateral
-
-                texto_label = tk.Label(item_frame, text=f"{descricao} ({cor_nome})", anchor="w")
-                texto_label.pack(side=tk.LEFT, padx=5)  # Adicionei padding entre o quadrado e o texto
-
-
 
     def desenhar_quadrados(self):
         self.quadrados = {}
