@@ -21,7 +21,7 @@ CORES_TERRENO = {
 }
 
 # Personagens representados por cores
-CORES_PERSONAGENS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]  # Vermelho, verde, azul e amarelo
+CORES_PERSONAGENS = [(255, 0, 0), (0, 255, 0), (75,0,130), (255, 255, 0)]  # Vermelho, verde, azul e amarelo
 
 # Criação da tela
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
@@ -55,7 +55,7 @@ def criar_tabuleiro():
             tipo_terreno = choice
             linha_tabuleiro.append(tipo_terreno)
         tabuleiro.append(linha_tabuleiro)
-    
+
     return tabuleiro
 
 # Função para desenhar o tabuleiro
@@ -67,15 +67,18 @@ def desenhar_tabuleiro(tabuleiro):
             pygame.draw.rect(tela, cor, (coluna * TAMANHO_QUADRADO, linha * TAMANHO_QUADRADO, TAMANHO_QUADRADO, TAMANHO_QUADRADO))
 
 # Função para adicionar personagens ao tabuleiro
-def adicionar_personagens():
-    posicoes = []
-    while len(posicoes) < 4:
-        x = random.randint(0, NUM_QUADRADOS - 1)
-        y = random.randint(0, NUM_QUADRADOS - 1)
-        if (x, y) not in posicoes:  # Certifica-se de que personagens não se sobreponham
-            posicoes.append((x, y))
-            cor_personagem = CORES_PERSONAGENS[len(posicoes) - 1]
-            pygame.draw.circle(tela, cor_personagem, (x * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2, y * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2), TAMANHO_QUADRADO // 2)
+def adicionar_personagens(posicoes):
+    #Rick
+    rick = ()
+
+    count = 0
+    for posicao in posicoes:    
+        cor_personagem = CORES_PERSONAGENS
+        pygame.draw.circle(tela, cor_personagem[count], (posicao[0] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2, posicao[1] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2), TAMANHO_QUADRADO // 2)
+        count+=1
+    
+    rick = (12,20)
+    pygame.draw.circle(tela, (0, 0, 0), (rick[0] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2, rick[1] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2), TAMANHO_QUADRADO // 2)
 
 # Função principal do jogo
 def main():
@@ -89,9 +92,16 @@ def main():
             if evento.type == pygame.QUIT:
                 rodando = False
 
+        #Posição dos personagens
+        #####OBSERVAÇÃO:
+        #Aparentemente a passagem de x e y é invertida nos parâmetros, fazer alterações no formato (y, x)
+        posicoes = [(32, 5), (31,13), (35, 35), (8,32)]
+
         # Desenhar o tabuleiro e personagens
         desenhar_tabuleiro(tabuleiro)
-        adicionar_personagens()
+        adicionar_personagens(posicoes)
+
+        
 
         # Atualizar a tela
         pygame.display.flip()
