@@ -1,3 +1,16 @@
+Sobre:
+O personagem preto está dentro de uma prisão e precisa reunir todos os membros de seu grupo antes de fugir da prisão. Ele está machucado e deve encontrar o melhor 
+caminho para chegar até seus companheiros considerando o terreno. A descoberta do melhor caminho para cada foi realizada utilizando a busca A* com distância manhattan como
+heuristica. Cada terreno possui um tempo de locomoção sendo:
+
+Cinza:  asfalto (+1)
+Branco: paralelepipedo (+10)
+Verde:  grama (+5)
+Marrom: terra (+3)
+Azul:   edifísios(não pode passar por edifícios)
+
+
+Inicialização:
 Para que o mapa seja compartilhado, adicionar a pasta prison_map para a workspace. Não selecionar a game e a map_creator separadamente pois 
 compartilham o arquivo do mapa.
 
