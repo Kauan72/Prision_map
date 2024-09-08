@@ -24,7 +24,13 @@ CORES_PERSONAGENS = [(0, 255, 0), (255, 0, 0), (75, 0, 130), (255, 255, 0)]
 
 # Criação da tela
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-pygame.display.set_caption("Tabuleiro com Terrenos e Personagens")
+pygame.display.set_caption("Fuga da prisão")
+
+# Inicialização da fonte para o score
+fonte_score = pygame.font.Font(None, 36)
+
+# Variável para armazenar o score
+score = 0
 
 def carrega_matriz_traduzida(matriz_traduzida):
     matriz_traduzida = np.zeros((42, 42), dtype=object)
@@ -73,9 +79,6 @@ def adicionar_personagens(rick, posicoes):
 
     pygame.draw.circle(tela, (0, 0, 0), (rick[1] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2, rick[0] * TAMANHO_QUADRADO + TAMANHO_QUADRADO // 2), TAMANHO_QUADRADO // 2)
 
-def mover_rick(rick):
-    pass  # Esta função ainda não está implementada
-
 def desenhar_botao_start(started):
     cor_botao = (0, 128, 0)  # Verde
     largura_botao = 100
@@ -86,6 +89,11 @@ def desenhar_botao_start(started):
     texto = fonte.render('Start', True, (255, 255, 255))  # Texto branco
     texto_rect = texto.get_rect(center=(posicao_botao[0] + largura_botao // 2, posicao_botao[1] + altura_botao // 2))
     tela.blit(texto, texto_rect)
+
+def exibir_score(score):
+    """Desenha o score no topo esquerdo da tela."""
+    texto_score = fonte_score.render(f'Score: {score}', True, (255, 255, 255))  # Texto branco
+    tela.blit(texto_score, (10, 10))
 
 def verifica_validade_cordenada(coordenada):
     x = coordenada[0]
@@ -236,6 +244,7 @@ def busca_a_estrela(rick, destino, matriz_traduzida):
 def main():
     tabuleiro, matriz_traduzida = criar_tabuleiro()
     clock = pygame.time.Clock()
+    global score
 
     posicoes = [[13, 31], [5, 32], [35, 35], [32, 8]]
     saida = [39, 20]
@@ -265,6 +274,7 @@ def main():
     caminho5 = caminho5[::-1]
 
     caminho = caminho1 + caminho2 + caminho3 + caminho4 + caminho5
+    caminho.pop(0)
 
     rick = [20, 12]
 
@@ -284,13 +294,16 @@ def main():
             agora = pygame.time.get_ticks()
             if agora - tempo_mover_rick >= intervalo_mover_rick:
                 #Melhor Rota: ['Preto', 'Verde', 'Vermelho', 'Roxo', 'Amarelo', 'Sa�da']
-                #Custo Total: 117
                 if len(caminho) > 0:
+                    print(caminho)
                     proxima_posicao = caminho.pop(0)
                     rick = proxima_posicao
                 if rick == posicoes[0]:
                     posicoes.pop(0)
                     CORES_PERSONAGENS.pop(0)
+
+                terreno_custo = tradutor_custo_terreno(proxima_posicao, matriz_traduzida)
+                score+=terreno_custo
 
                 tempo_mover_rick = agora
 
@@ -300,6 +313,9 @@ def main():
         
         # Desenhar o botão "Start"
         desenhar_botao_start(started)
+
+        #Exibe o score
+        exibir_score(score)
 
         # Atualizar a tela
         pygame.display.flip()

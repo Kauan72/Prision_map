@@ -3,13 +3,14 @@ import os
 import numpy as np
 from tooltip import Tooltip
 from matriz import criar_matriz
+import conversor
 
 class Tabuleiro:
     def __init__(self, root):
         self.root = root
         self.matriz = criar_matriz()
         self.cores = ["white", "gray", "green", "blue",
-                      "saddle brown", "black", "orange", "purple", "pink", "cyan"]
+                      "saddle brown"]
         self.cor_atual = 1
         self.tamanho_quadrado = 20
         self.largura_canvas = 42 * self.tamanho_quadrado
@@ -31,8 +32,8 @@ class Tabuleiro:
         self.frame_botoes = tk.Frame(self.root)
         self.frame_botoes.pack(side=tk.LEFT, padx=10, pady=10)
 
-        cores = ["white", "gray", "green", "blue", "saddle brown", "black", "orange", "purple", "pink", "cyan"]
-        textos = ["Branco", "Cinza", "Verde", "Azul", "Brown", "Rick", "Carl", "Daryl", "Glen", "Maggie"]
+        cores = ["white", "gray", "green", "blue", "saddle brown"]
+        textos = ["Branco", "Cinza", "Verde", "Azul", "Brown"]
         
         for cor, texto in zip(cores, textos):
             botao = tk.Button(self.frame_botoes, text=texto, command=lambda cor=cor: self.mudar_cor(cor))
@@ -118,6 +119,8 @@ class Tabuleiro:
         arquivo = os.path.join(pasta, "matriz.npy")
         np.save(arquivo, self.matriz)
         print(f"Matriz salva em {arquivo}")
+
+        conversor.traduz()
 
     def carregar_matriz(self):
         arquivo = os.path.join("mapa", "matriz.npy")

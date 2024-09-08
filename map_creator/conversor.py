@@ -27,7 +27,7 @@ def cria_matrizes():
 
 def carrega_matriz_padrao(matriz):
     # Define o caminho fixo para carregar o arquivo do mapa padrão
-    arquivo = os.path.join("mapa", "matrizPadrao.npy")
+    arquivo = os.path.join("mapa", "matriz.npy")
     if os.path.exists(arquivo):
         matriz = np.load(arquivo)
         print(f"Matriz carregada de {arquivo}")
@@ -48,7 +48,7 @@ def salvar_matriz_traduzida(matriz_traduzida):
 def carrega_matriz_traduzida(matriz_traduzida):
     matriz_traduzida = np.zeros((42, 42), dtype=object)
     # Define o caminho fixo para carregar o arquivo do mapa padrão
-    arquivo = os.path.join("mapa", "matriz_traduzida.npy")
+    arquivo = os.path.join("mapa", "matriz.npy")
     if os.path.exists(arquivo):
         matriz_traduzida = np.load(arquivo, allow_pickle=True)
         print(f"Matriz carregada de {arquivo}")
@@ -57,12 +57,13 @@ def carrega_matriz_traduzida(matriz_traduzida):
 
     return matriz_traduzida
 
-matriz, matriz_traduzida = cria_matrizes()
-matriz = carrega_matriz_padrao(matriz)
+def traduz():
+    matriz, matriz_traduzida = cria_matrizes()
+    matriz = carrega_matriz_padrao(matriz)
 
-converte_matriz(matriz, matriz_traduzida)
+    converte_matriz(matriz, matriz_traduzida)
 
-salvar_matriz_traduzida(matriz_traduzida)
+    salvar_matriz_traduzida(matriz_traduzida)
 
 
 
